@@ -84,11 +84,12 @@ class ForgeryPredictor:
         ela_pil = Image.fromarray(ela_array)
 
         # ── 2. Preprocess ─────────────────────────────────────────────
-        input_tensor = _TRANSFORM(ela_pil).unsqueeze(0).to(self.device)
+        rgb_tensor = _TRANSFORM(image.convert("RGB")).unsqueeze(0).to(self.device)
+        ela_tensor = _TRANSFORM(ela_pil).unsqueeze(0).to(self.device)
 
         # ── 3. Forward + Grad-CAM (single pass, gradients kept) ───────
         # NOTE: do NOT wrap in torch.no_grad() — backward pass is needed.
-        cam, probs, class_idx = self.gradcam.generate(input_tensor)
+        cam, probs, class_idx = self.gradcam.generate((rgb_tensor, ela_tensor))
 
         # ── 4. Heatmap overlay on *original* image ────────────────────
         original_224 = np.array(image.convert("RGB").resize((224, 224)))

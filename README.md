@@ -1,6 +1,11 @@
-# Image Forgery Detector
+# Image Forgery Detector — Dual-Stream CNN & Grad-CAM Document Screening
 
-Detects image manipulation using **Error Level Analysis (ELA)**, a fine-tuned **ResNet18 CNN**, and **Grad-CAM** spatial explanations.
+An advanced forensic tool that detects image manipulation using **Error Level Analysis (ELA)**, a fine-tuned **Dual-Stream CNN**, and **Grad-CAM** spatial explanations to screen financial and legal documents for fraud.
+
+[![Hugging Face Spaces](https://img.shields.io/badge/%F0%9F%A5%97%20Hugging%20Face-Spaces-blue)](https://huggingface.co/spaces/anshulec23-cloud/image-forgery-detection)
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://share.streamlit.io/anshulec23-cloud/image-forgery-detection/main/app.py)
+
+![Grad-CAM Explanation Example](assets/gradcam_heatmap_example.jpg)
 
 ## Classification Labels
 
@@ -112,26 +117,25 @@ The app auto-detects `weights/model.pth` and loads it.
 ## Pipeline Internals
 
 ```
-Upload
+Upload Image
   │
-  ▼
-ELA (src/ela.py)
-  Re-save image at JPEG quality=95
-  |original − compressed| × 15
-  │
-  ▼
-ResNet18 head (src/model.py)
-  Resize 224×224 → Normalise (ImageNet stats)
-  Backbone → Dropout → Linear(512, 256) → ReLU → Dropout → Linear(256, 3)
-  │
-  ├──► Softmax → class probabilities
-  │
-  └──► Grad-CAM (src/gradcam.py)
-         Forward hook  → capture layer4[-1] activations
-         Backward hook → capture gradients
-         Pool grads over spatial dims → channel weights
-         Weighted sum of activations → ReLU → normalise
-         Resize → JET colormap → blend with original
+  ├───► Original RGB Stream (Resize 224x224, Normalise)
+  │                                │
+  │                                ▼
+  │                       ResNet18 Backbone ──┐
+  │                                           │ (Concatenate 512+512 = 1024)
+  │                                           ▼
+  │                                      Fusion Head ──► Logits [Real, Tampered, AI-Generated]
+  │                                           ▲
+  │                       ResNet18 Backbone ──┘
+  │                                ▲
+  │                                │
+  └───► ELA Stream ────────────────┘
+        JPEG Quality=95 Compression Error
+        Amplify residuals by x15
+        Resize 224x224, Normalise
+        
+  * Saliency explanations are computed using Grad-CAM (src/gradcam.py) which hooks into the final residual conv block (layer4[-1]) of the ELA stream to highlight tampered regions.
 ```
 
 ---
@@ -142,7 +146,5 @@ ResNet18 head (src/model.py)
   compression cycle to show meaningful residuals.
 - Grad-CAM runs in `torch.enable_grad()` mode even at inference time.
   This is intentional — the backward pass is needed for the saliency map.
-- For production use, replace the ResNet18 backbone with EfficientNet-B4 or
-  a dual-stream model that processes both the original and ELA simultaneously
-  for higher accuracy.
+- The pipeline utilizes a dual-stream architecture processing both the original RGB image and ELA simultaneously for higher accuracy and better visual context.
 - Model predictions are probabilistic. Do **not** use as legal evidence.

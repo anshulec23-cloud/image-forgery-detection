@@ -21,7 +21,7 @@ class TrainConfig:
     """Path to save the best checkpoint."""
 
     pretrained_backbone: bool = True
-    """Use ImageNet-pretrained ResNet18 weights as starting point."""
+    """Use ImageNet-pretrained ResNet18 weights for both streams as starting point."""
 
     # ── Training loop ─────────────────────────────────────────────────
     epochs: int = 20

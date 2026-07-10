@@ -19,11 +19,16 @@ from src.model import ForgeryDetector
 
 
 def main() -> None:
-    os.makedirs("weights", exist_ok=True)
+    root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+    weights_dir = os.path.join(root_dir, "weights")
+    os.makedirs(weights_dir, exist_ok=True)
+    
     model = ForgeryDetector(pretrained=False)
-    torch.save(model.state_dict(), "weights/model.pth")
-    size_mb = os.path.getsize("weights/model.pth") / 1_000_000
-    print(f"[demo] Saved random weights → weights/model.pth  ({size_mb:.1f} MB)")
+    weights_path = os.path.join(weights_dir, "model.pth")
+    torch.save(model.state_dict(), weights_path)
+    
+    size_mb = os.path.getsize(weights_path) / 1_000_000
+    print(f"[demo] Saved random weights -> {weights_path} ({size_mb:.1f} MB)")
     print("[demo] WARNING: These weights are random. Predictions are not meaningful.")
     print("[demo] Train a real model with:  python -m train.train --data data/")
 

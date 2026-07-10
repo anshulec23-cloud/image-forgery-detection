@@ -111,7 +111,7 @@ with st.sidebar:
         1. **ELA** — recompresses the image and measures per-pixel error levels.
            Tampered regions show inconsistent JPEG residuals.
 
-        2. **CNN** — a fine-tuned ResNet18 classifies the ELA map into:
+        2. **CNN** — a fine-tuned Dual-Stream CNN classifies the document into:
            - 🟢 Real
            - 🔴 Tampered *(splicing / copy-move)*
            - 🟠 AI-generated
@@ -280,6 +280,6 @@ with st.expander("🔎 Raw Grad-CAM activation map", expanded=False):
 
 st.markdown("---")
 st.caption(
-    "Image Forgery Detector · ELA + ResNet18 + Grad-CAM · "
+    "Image Forgery Detector · ELA + Dual-Stream CNN + Grad-CAM · "
     "Predictions are probabilistic and should not be used as legal evidence."
 )

@@ -98,22 +98,25 @@ def run_epoch(
     ctx = torch.enable_grad() if training else torch.no_grad()
     with ctx:
         for images, labels in loader:
-            images = images.to(device)
+            rgb, ela = images
+            rgb = rgb.to(device)
+            ela = ela.to(device)
             labels = labels.to(device)
 
             if training:
                 optimizer.zero_grad()
 
-            outputs = model(images)
+            outputs = model((rgb, ela))
             loss = criterion(outputs, labels)
 
             if training:
                 loss.backward()
                 optimizer.step()
 
-            total_loss += loss.item() * images.size(0)
+            batch_size = rgb.size(0)
+            total_loss += loss.item() * batch_size
             correct += (outputs.argmax(dim=1) == labels).sum().item()
-            n += images.size(0)
+            n += batch_size
 
     return total_loss / n, correct / n
 
@@ -130,8 +133,10 @@ def per_class_accuracy(
     model.eval()
     with torch.no_grad():
         for images, labels in loader:
-            images = images.to(device)
-            preds = model(images).argmax(dim=1).cpu()
+            rgb, ela = images
+            rgb = rgb.to(device)
+            ela = ela.to(device)
+            preds = model((rgb, ela)).argmax(dim=1).cpu()
             for pred, label in zip(preds, labels):
                 total[label.item()] += 1
                 if pred.item() == label.item():

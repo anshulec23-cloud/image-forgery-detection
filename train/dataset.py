@@ -102,8 +102,9 @@ class ForgeryDataset(Dataset):
         ela_arr = compute_ela(image, self.ela_quality, self.ela_amplify)
         ela_pil = Image.fromarray(ela_arr)
 
-        tensor = self.transform(ela_pil)
-        return tensor, label
+        rgb_tensor = self.transform(image)
+        ela_tensor = self.transform(ela_pil)
+        return (rgb_tensor, ela_tensor), label
 
     def summary(self) -> str:
         lines = [f"ForgeryDataset — {len(self.samples)} total samples"]
