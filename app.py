@@ -29,11 +29,24 @@ st.set_page_config(
 )
 
 _WEIGHTS_PATH = "weights/model.pth"
+_METRICS_PATH = "weights/model_metrics.json"
 _DEMO_WARNING = (
-    "⚠️ **Demo mode:** running with random weights.  "
-    "Train or supply a checkpoint at `weights/model.pth` for real predictions.  \n"
-    "Run: `python scripts/generate_demo_weights.py` to suppress this warning."
+    "⚠️ **No trained checkpoint found** at `weights/model.pth` — the model is "
+    "running with random weights and its predictions are meaningless.  \n"
+    "Restore the trained checkpoint from the repository, or train one with "
+    "`python -m train.train --data data/`."
 )
+
+
+def _load_metrics() -> dict | None:
+    """Held-out test metrics recorded at training time, if present."""
+    import json
+
+    try:
+        with open(_METRICS_PATH) as f:
+            return json.load(f)
+    except (OSError, ValueError):
+        return None
 
 # ──────────────────────────────────────────────────────────────────────────────
 # Custom CSS — dark forensic aesthetic
@@ -120,6 +133,19 @@ with st.sidebar:
            highlight which spatial regions drove the decision.
         """
     )
+    _metrics = _load_metrics()
+    if _metrics and os.path.exists(_WEIGHTS_PATH):
+        _t = _metrics["test"]
+        st.markdown("---")
+        st.markdown("**Model accuracy** *(held-out test set)*")
+        st.metric("Overall", f"{_t['accuracy']:.1%}", help=f"n = {_t['n']} unseen images")
+        st.caption(
+            " · ".join(
+                f"{c.replace('_', ' ')} {a:.1%}"
+                for c, a in _t["per_class_accuracy"].items()
+            )
+        )
+        st.caption("Trained on CASIA v2.0 + GenImage. See README → Results.")
     st.markdown("---")
     ela_quality = st.slider("ELA re-save quality", 70, 99, 95, 1)
     ela_amplify = st.slider("ELA amplification", 5, 50, 15, 1)

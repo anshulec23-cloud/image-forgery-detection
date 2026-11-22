@@ -1,0 +1,13 @@
+Epoch 01/20  | train loss 0.6038  acc 0.7477  | val loss 0.5074  acc 0.7978  | 106.8s  * NEW BEST
+Epoch 02/20  | train loss 0.4854  acc 0.8023  | val loss 0.3747  acc 0.8607  | 51.4s  * NEW BEST
+Epoch 03/20  | train loss 0.4657  acc 0.8052  | val loss 0.3523  acc 0.8627  | 54.8s  * NEW BEST
+Epoch 04/20  | train loss 0.2872  acc 0.8830  | val loss 0.1779  acc 0.9247  | 63.7s  * NEW BEST
+Epoch 05/20  | train loss 0.1964  acc 0.9200  | val loss 0.2772  acc 0.8925  | 65.0s
+Epoch 06/20  | train loss 0.1683  acc 0.9310  | val loss 0.1312  acc 0.9521  | 65.0s  * NEW BEST
+Epoch 07/20  | train loss 0.1439  acc 0.9429  | val loss 0.1356  acc 0.9509  | 64.8s
+Epoch 08/20  | train loss 0.1320  acc 0.9463  | val loss 0.1959  acc 0.9372  | 65.1s
+Epoch 09/20  | train loss 0.1081  acc 0.9542  | val loss 0.1095  acc 0.9589  | 64.9s  * NEW BEST
+Epoch 10/20  | train loss 0.0923  acc 0.9616  | val loss 0.0979  acc 0.9613  | 65.2s  * NEW BEST
+Epoch 11/20  | train loss 0.0917  acc 0.9602  | val loss 0.1225  acc 0.9557  | 67.8s
+Epoch 12/20  | train loss 0.0881  acc 0.9615  | val loss 0.1300  acc 0.9476  | 65.7s
+Epoch 13/20  | train loss 0.0828  acc 0.9622  | val loss 0.1505  acc 0.9489  | 65.9s

@@ -23,8 +23,14 @@ def main() -> None:
     weights_dir = os.path.join(root_dir, "weights")
     os.makedirs(weights_dir, exist_ok=True)
     
-    model = ForgeryDetector(pretrained=False)
     weights_path = os.path.join(weights_dir, "model.pth")
+    if os.path.exists(weights_path) and "--force" not in sys.argv:
+        print(f"[demo] {weights_path} already exists (the trained checkpoint ships "
+              "with the repo). Refusing to overwrite it with random weights.")
+        print("[demo] Pass --force if you really want random weights.")
+        return
+
+    model = ForgeryDetector(pretrained=False)
     torch.save(model.state_dict(), weights_path)
     
     size_mb = os.path.getsize(weights_path) / 1_000_000

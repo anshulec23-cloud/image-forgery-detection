@@ -1,0 +1,46 @@
+{
+  "ALL/any": {
+    "accuracy": 0.9532823197744664,
+    "n": 2483
+  },
+  "ALL/jpeg": {
+    "accuracy": 0.953962703962704,
+    "n": 1716
+  },
+  "ALL/lossless": {
+    "accuracy": 0.9517601043024772,
+    "n": 767
+  },
+  "ai_generated/any": {
+    "accuracy": 0.97,
+    "n": 600
+  },
+  "ai_generated/jpeg": {
+    "accuracy": 0.9523809523809523,
+    "n": 294
+  },
+  "ai_generated/lossless": {
+    "accuracy": 0.9869281045751634,
+    "n": 306
+  },
+  "real/any": {
+    "accuracy": 0.9497757847533632,
+    "n": 1115
+  },
+  "real/jpeg": {
+    "accuracy": 0.9497757847533632,
+    "n": 1115
+  },
+  "tampered/any": {
+    "accuracy": 0.9453125,
+    "n": 768
+  },
+  "tampered/jpeg": {
+    "accuracy": 0.9706840390879479,
+    "n": 307
+  },
+  "tampered/lossless": {
+    "accuracy": 0.928416485900217,
+    "n": 461
+  }
+}

@@ -1,9 +1,14 @@
 __pycache__/
 *.pyc
-weights/
+weights/*
+!weights/model.pth
+!weights/model_metrics.json
+!weights/model_format_breakdown.json
+!weights/training_log.txt
 data/
 .env
 .DS_Store
 *.jpg
 *.png
 !assets/gradcam_heatmap_example.jpg
+train.log

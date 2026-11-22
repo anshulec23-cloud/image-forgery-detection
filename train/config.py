@@ -13,8 +13,11 @@ class TrainConfig:
     data_dir: str = "data"
     """Root directory with subdirectories: real/, tampered/, ai_generated/"""
 
-    val_split: float = 0.20
-    """Fraction of dataset held out for validation."""
+    val_split: float = 0.15
+    """Fraction of dataset held out for validation (checkpoint selection)."""
+
+    test_split: float = 0.15
+    """Fraction held out as a test set, evaluated only once after training."""
 
     # ── Model ─────────────────────────────────────────────────────────
     weights_out: str = "weights/model.pth"

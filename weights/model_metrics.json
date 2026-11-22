@@ -1,0 +1,78 @@
+{
+  "class_names": [
+    "real",
+    "tampered",
+    "ai_generated"
+  ],
+  "dataset": {
+    "per_class": {
+      "real": 7437,
+      "tampered": 5123,
+      "ai_generated": 4000
+    },
+    "val": 2483,
+    "test": 2483
+  },
+  "val": {
+    "accuracy": 0.9613370922271446,
+    "n": 2483,
+    "per_class_accuracy": {
+      "real": 0.9587443946188341,
+      "tampered": 0.953125,
+      "ai_generated": 0.9766666666666667
+    },
+    "per_class_n": {
+      "real": 1115,
+      "tampered": 768,
+      "ai_generated": 600
+    },
+    "confusion_matrix": [
+      [
+        1069,
+        38,
+        8
+      ],
+      [
+        35,
+        732,
+        1
+      ],
+      [
+        13,
+        1,
+        586
+      ]
+    ]
+  },
+  "test": {
+    "accuracy": 0.9532823197744664,
+    "n": 2483,
+    "per_class_accuracy": {
+      "real": 0.9497757847533632,
+      "tampered": 0.9453125,
+      "ai_generated": 0.97
+    },
+    "per_class_n": {
+      "real": 1115,
+      "tampered": 768,
+      "ai_generated": 600
+    },
+    "confusion_matrix": [
+      [
+        1059,
+        45,
+        11
+      ],
+      [
+        41,
+        726,
+        1
+      ],
+      [
+        15,
+        3,
+        582
+      ]
+    ]
+  }
+}
