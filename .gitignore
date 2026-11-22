@@ -11,4 +11,5 @@ data/
 *.jpg
 *.png
 !assets/gradcam_heatmap_example.jpg
+!assets/demo_results.png
 train.log

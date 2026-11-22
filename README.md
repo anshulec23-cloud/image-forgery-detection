@@ -2,10 +2,27 @@
 
 An advanced forensic tool that detects image manipulation using **Error Level Analysis (ELA)**, a fine-tuned **Dual-Stream CNN**, and **Grad-CAM** spatial explanations to screen financial and legal documents for fraud.
 
-[![Hugging Face Spaces](https://img.shields.io/badge/%F0%9F%A5%97%20Hugging%20Face-Spaces-blue)](https://huggingface.co/spaces/anshulec23-cloud/image-forgery-detection)
-[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://share.streamlit.io/anshulec23-cloud/image-forgery-detection/main/app.py)
-
 ![Grad-CAM Explanation Example](assets/gradcam_heatmap_example.jpg)
+
+## Demo
+
+![Trained model on held-out test images](assets/demo_results.png)
+
+Real output of the trained model (`weights/model.pth`) on three images from the held-out
+test set — one per class, none seen during training. Columns: the input, its ELA map,
+and the Grad-CAM heatmap of what drove the decision. In the tampered example the
+heatmap lands on the spliced-in section of the wall.
+Images: CASIA v2.0 (rows 1–2) and GenImage / Stable Diffusion 1.5 (row 3).
+
+**Try it on your own images** — everything runs locally on your machine, nothing is
+uploaded anywhere and there is no hosted service or cost:
+
+```bash
+pip install -r requirements.txt
+streamlit run app.py      # opens http://localhost:8501
+```
+
+---
 
 ## Classification Labels
 
